@@ -17,7 +17,7 @@ pip install torch==2.0.0 torchvision==0.15.1 torchaudio==2.0.1
 # on CentOS 7
 sudo yum install -y centos-release-scl-rh
 sudo yum update
-sudo yum install -y devtoolset-7
+sudo yum install -y devtoolset-9
 source /opt/rh/devtoolset-9/enable
 
 # on debian 
