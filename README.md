@@ -54,7 +54,7 @@ some precompiled wheels:
 ## 2. running
 
 ```shell
-git clone git@github.com:OvJat/DeepSpeedTutorial.git
+git clone https://github.com/OvJat/DeepSpeedTutorial.git
 cd DeepSpeedTutorial
 # editor hostfile 
 ./run_dist.sh &
