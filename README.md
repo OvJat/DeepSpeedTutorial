@@ -32,6 +32,9 @@ git clone https://github.com/microsoft/DeepSpeed.git
 cd DeepSpeed
 
 git checkout v0.9.5
+
+# !!! below is single command
+TORCH_CUDA_ARCH_LIST="6.1;7.5;8.6;8.9" \
 DS_BUILD_CCL_COMM=1 \
 DS_BUILD_CPU_ADAM=1 \
 DS_BUILD_CPU_ADAGRAD=1 \
@@ -45,10 +48,12 @@ pip install ./dist/deepspeed-0.9.5+fc9e1ee-*-linux_x86_64.whl
 
 some precompiled wheels:
 
-| OS    |torch version| cuda version | download link|
-|:---:|:---:|:---:|:---:|
-|CentOS 7 x86_64| 1.13.1 | cuda11.8 | [wheel](wheels/cenots-7-x86_64/Torch1.13.1/deepspeed-0.9.5+fc9e1ee-cp310-cp310-linux_x86_64.whl)|
-|CentOS 7 x86_64| 2.0.1 | cuda11.8 | [wheel](wheels/cenots-7-x86_64/Torch2.0.1/deepspeed-0.9.5+fc9e1ee-cp310-cp310-linux_x86_64.whl)|
+| OS            |torch version| cuda version | download link                                                                                   |
+|:-------------:|:-----------:|:------------:|:-----------------------------------------------------------------------------------------------:|
+|CentOS 7 x86_64| 1.13.1      | cuda11.8     | [wheel](wheels/cenots-7-x86_64/Torch1.13.1/deepspeed-0.9.5+fc9e1ee-cp310-cp310-linux_x86_64.whl)|
+|CentOS 7 x86_64| 2.0.1       | cuda11.8     | [wheel](wheels/cenots-7-x86_64/Torch2.0.1/deepspeed-0.9.5+fc9e1ee-cp310-cp310-linux_x86_64.whl) |
+|Ubuntu 20.04 x86_64| 1.13.1  | cuda11.8     | [wheel](wheels/ubuntu-2004-x86_64/Torch1.13.1/deepspeed-0.9.5+fc9e1ee0-cp310-cp310-linux_x86_64.whl)|
+|Ubuntu 20.04 x86_64| 2.0.1   | cuda11.8     | [wheel](wheels/ubuntu-2004-x86_64/Torch2.0.1/deepspeed-0.9.5+fc9e1ee0-cp310-cp310-linux_x86_64.whl)|
 
 
 ## 2. running

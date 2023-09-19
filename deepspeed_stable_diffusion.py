@@ -22,7 +22,7 @@ import torch.nn.functional as tnf
 from torchvision import transforms
 import deepspeed
 
-from diffusers import StableDiffusionPipeline, DPMSolverMultistepScheduler
+from diffusers import StableDiffusionPipeline, DDPMScheduler
 from loguru import logger as logging
 
 SCRIPT_PATH = os.path.dirname(os.path.abspath(__file__))
@@ -109,7 +109,7 @@ class Diffusion(nn.Module):
         self.vae.decoder = None
         # we're only training this
         self.unet = pipe.unet
-        self.noise_scheduler = DPMSolverMultistepScheduler.from_config(pipe.scheduler.config)
+        self.noise_scheduler = DDPMScheduler.from_config(pipe.scheduler.config)
         self.tokenizer = pipe.tokenizer
 
     def forward(self, images, texts):
@@ -129,12 +129,9 @@ class Diffusion(nn.Module):
             timesteps = timesteps.long()
             noisy_latents = self.noise_scheduler.add_noise(latents, noise, timesteps)
 
-            if self.noise_scheduler.config.prediction_type == "epsilon":
-                target = noise
-            elif self.noise_scheduler.config.prediction_type == "v_prediction":
-                target = self.noise_scheduler.add_noise(latents, noise, timesteps)
-            else:
-                raise ValueError(f"Unknown prediction type {self.noise_scheduler.config.prediction_type}")
+            # epsilon
+            target = noise
+
         # Predict the noise residual and compute loss
         predications = self.unet(noisy_latents, timesteps, text_tokens).sample
 
