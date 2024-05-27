@@ -19,8 +19,6 @@ pip install packaging build wheel setuptools
 
 # install torch latest
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
-# or torch 1.13.1
-pip install torch==1.13.1 torchvision==0.14.1 torchaudio==0.13.1 --extra-index-url https://download.pytorch.org/whl/cu118
 ```
 
 ### 1.2 install deepspeed for Nvidia GPU [Linux]
