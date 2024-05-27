@@ -1,39 +1,40 @@
 # DeepSpeedTutorial
 DeepSpeed Tutorial
 
-## 1 setup 
+## 1 setup and install
 
-### 1.1 setup python environment [Linux]
+### 1.1 setup python environment for DeepSpeed [Linux]
 ```shell
-conda create -n Torch python=3.10
-conda activate Torch
-pip install torch==2.0.0 torchvision==0.15.1 torchaudio==2.0.1
+# create python environment
+conda create -n DeepSpeed python=3.10 openmpi
+
+# activate environment
+conda activate DeepSpeed
+
+# install compiler
+conda install compilers sysroot_linux-64==2.17 gcc==11.4 ninja py-cpuinfo libaio pydantic ca-certificates certifi openssl
+
+# install build tools
+pip install packaging build wheel setuptools 
+
+# install torch latest
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+# or torch 1.13.1
+pip install torch==1.13.1 torchvision==0.14.1 torchaudio==0.13.1 --extra-index-url https://download.pytorch.org/whl/cu118
 ```
 
-### 1.2 install deepspeed [Linux]
-
-#### setup gcc compiler
-```shell
-# on CentOS 7
-sudo yum install -y centos-release-scl-rh
-sudo yum update
-sudo yum install -y devtoolset-9
-source /opt/rh/devtoolset-9/enable
-
-# on debian 
-sudo apt update
-sudo apt install build-essential manpages-dev
-```
-
+### 1.2 install deepspeed for Nvidia GPU [Linux]
 
 ```shell
 git clone https://github.com/microsoft/DeepSpeed.git
 
 cd DeepSpeed
 
-git checkout v0.9.5
+git checkout v0.14.2
 
+# make deepspeed package
 # !!! below is single command
+unset CUDA_VISIBLE_DEVICES
 TORCH_CUDA_ARCH_LIST="6.1;7.5;8.6;8.9" \
 DS_BUILD_CCL_COMM=1 \
 DS_BUILD_CPU_ADAM=1 \
@@ -43,7 +44,8 @@ DS_BUILD_FUSED_LAMB=1 \
 DS_BUILD_UTILS=1 \
 python setup.py build_ext -j24 bdist_wheel
 
-pip install ./dist/deepspeed-0.9.5+fc9e1ee-*-linux_x86_64.whl
+# install deepspeed package
+pip install ./dist/deepspeed-0.14.2+5f631ab-*-linux_x86_64.whl
 ```
 
 some precompiled wheels:
@@ -68,6 +70,6 @@ disown
 tail -f ./logs/run_dist.sh.log
 ```
 
-## 3. discussion
+## 3. contact
 
 E-MAIL: louxiao@i32n.com
