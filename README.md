@@ -1,12 +1,14 @@
 # DeepSpeedTutorial
 DeepSpeed Tutorial
 
+NOTICE: This README.md is primarily for (debian-12 and cudatoolkit=12.4). This may be adapted for other cases, but modifications are required.
+
 ## 1 setup and install
 
 ### 1.1 setup python environment for DeepSpeed [Linux]
 ```shell
 # create python environment
-conda create -n DeepSpeed python=3.10 openmpi
+conda create -n DeepSpeed python=3.12 openmpi numpy=1.26
 
 # activate environment
 conda activate DeepSpeed
@@ -15,10 +17,10 @@ conda activate DeepSpeed
 conda install compilers sysroot_linux-64==2.17 gcc==11.4 ninja py-cpuinfo libaio pydantic ca-certificates certifi openssl
 
 # install build tools
-pip install packaging build wheel setuptools 
+pip install packaging build wheel setuptools loguru
 
 # install torch latest
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+pip install torch==2.4.0 torchaudio==2.4.0 torchvision==0.19.0 --index-url https://download.pytorch.org/whl/cu124
 ```
 
 ### 1.2 install deepspeed for Nvidia GPU [Linux]
@@ -28,7 +30,7 @@ git clone https://github.com/microsoft/DeepSpeed.git
 
 cd DeepSpeed
 
-git checkout v0.14.2
+git checkout v0.14.4
 
 # make deepspeed package
 # !!! below is single command
@@ -43,7 +45,7 @@ DS_BUILD_UTILS=1 \
 python setup.py build_ext -j24 bdist_wheel
 
 # install deepspeed package
-pip install ./dist/deepspeed-0.14.2+5f631ab-*-linux_x86_64.whl
+pip install ./dist/deepspeed-0.14.4*linux_x86_64.whl
 ```
 
 some precompiled wheels:
@@ -67,6 +69,10 @@ disown
 # check logging
 tail -f ./logs/run_dist.sh.log
 ```
+## 2.1 debug and faq
+The new versions of CUDA and PyTorch require the following environment to be set up:
+- NCCL_SOCKET_IFNAME. to find the proper value, using command line: `ip addr`
+- NCCL_IB_DISABLE. if the network-interface is not InfiniBand, set NCCL_IB_DISABLE=1
 
 ## 3. contact
 
